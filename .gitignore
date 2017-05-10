@@ -1,0 +1,3 @@
+opam-*.i686/
+opam-*.x86_64/
+opam-*.tar.gz

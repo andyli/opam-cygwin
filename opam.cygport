@@ -1,0 +1,48 @@
+NAME="opam"
+VERSION=1.2.2
+RELEASE=1
+CATEGORY="Libs"
+SUMMARY="a source-based package manager for OCaml"
+DESCRIPTION="Opam is a source-based package manager for OCaml.
+It supports multiple simultaneous compiler installations, flexible
+package constraints, and a Git-friendly development workflow."
+HOMEPAGE="https://opam.ocaml.org/"
+SRC_URI="https://github.com/ocaml/opam/archive/${VERSION}.tar.gz"
+DEPEND="
+    ocaml
+    ocaml-camlp4
+    ocaml-compiler-libs
+    ocaml-ocamlbuild
+    git
+    libncurses-devel
+    libmpfr-devel
+    flexdll
+"
+
+PATCH_URI="
+    https://patch-diff.githubusercontent.com/raw/ocaml/opam/pull/2668.patch
+"
+
+MAKEOPTS+="-j1"
+
+src_compile() {
+    lndirs
+    cd ${B}
+
+    # $LIBS defined by cygport interferes with OCamlMakefile
+    unset LIBS
+
+    cygconf
+    cygmake lib-ext
+    cygmake
+}
+
+src_test() {
+    cd ${B}
+    PATH=/usr/local/bin:/usr/bin cygmake tests
+}
+
+src_install() {
+    cd ${B}
+    cygmake install DESTDIR=${D}
+}
