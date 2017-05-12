@@ -33,8 +33,7 @@ src_compile() {
     unset LIBS
 
     cygconf
-    cygmake lib-ext
-    cygmake
+    cygmake lib-ext man all
 }
 
 src_test() {
