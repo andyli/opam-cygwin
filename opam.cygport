@@ -1,6 +1,6 @@
 NAME="opam"
-VERSION=1.2.2
-RELEASE=2
+VERSION=2.0.3
+RELEASE=1
 CATEGORY="Libs"
 SUMMARY="a source-based package manager for OCaml"
 DESCRIPTION="Opam is a source-based package manager for OCaml.
@@ -10,20 +10,33 @@ HOMEPAGE="https://opam.ocaml.org/"
 SRC_URI="https://github.com/ocaml/opam/archive/${VERSION}.tar.gz"
 DEPEND="
     ocaml
-    ocaml-camlp4
     ocaml-compiler-libs
     ocaml-ocamlbuild
+    ocaml-findlib
     git
-    libncurses-devel
-    libmpfr-devel
     flexdll
 "
 
-# https://cygwin.com/ml/cygwin/2018-01/msg00079.html
-REQUIRES="flexdll libX11-devel diffutils tar patch unzip curl gcc-core make m4 rsync git mercurial ocaml"
+PKG_NAMES="opam opam-installer"
 
-PATCH_URI="
-    https://patch-diff.githubusercontent.com/raw/ocaml/opam/pull/2668.patch
+# https://cygwin.com/ml/cygwin/2018-01/msg00079.html
+opam_REQUIRES="opam-installer flexdll libX11-devel diffutils tar patch unzip curl gcc-core make m4 rsync git mercurial ocaml"
+
+
+# enabled extglob for opam_CONTENTS
+shopt -s extglob
+
+opam_CONTENTS="
+    --exclude=usr/share/man/man1/opam-installer*
+    usr/bin/opam.exe
+    usr/share/doc/opam/*
+    usr/share/man/man1/*
+"
+opam_installer_CONTENTS="
+    usr/bin/opam-installer.exe
+    usr/lib/ocaml/opam-installer/*
+    usr/share/doc/opam-installer/*
+    usr/share/man/man1/opam-installer*
 "
 
 MAKEOPTS+="-j1"
@@ -47,4 +60,10 @@ src_test() {
 src_install() {
     cd ${B}
     cygmake install DESTDIR=${D}
+
+    mkdir -p ${D}/usr/lib/ocaml
+    mv ${D}/usr/lib/opam-installer ${D}/usr/lib/ocaml
+
+    mkdir -p ${D}/usr/share/doc
+    mv ${D}/usr/doc/opam-installer ${D}/usr/share/doc
 }
