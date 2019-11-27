@@ -1,5 +1,5 @@
 NAME="opam"
-VERSION=2.0.3
+VERSION=2.0.5
 RELEASE=1
 CATEGORY="Libs"
 SUMMARY="a source-based package manager for OCaml"
