@@ -49,7 +49,7 @@ src_compile() {
     unset LIBS
 
     cygconf
-    cygmake lib-ext man all
+    cygmake lib-ext all doc
 }
 
 src_test() {
