@@ -20,7 +20,7 @@ DEPEND="
 PKG_NAMES="opam opam-installer"
 
 # https://cygwin.com/ml/cygwin/2018-01/msg00079.html
-opam_REQUIRES="opam-installer flexdll libX11-devel diffutils tar patch unzip curl gcc-core make m4 rsync git mercurial ocaml"
+opam_REQUIRES="opam-installer flexdll libX11-devel diffutils tar patch unzip curl gcc-core make m4 rsync git mercurial ocaml ocaml-compiler-libs"
 
 
 # enabled extglob for opam_CONTENTS
