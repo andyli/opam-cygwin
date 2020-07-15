@@ -34,8 +34,6 @@ opam_CONTENTS="
 "
 opam_installer_CONTENTS="
     usr/bin/opam-installer.exe
-    usr/lib/ocaml/opam-installer/*
-    usr/share/doc/opam-installer/*
     usr/share/man/man1/opam-installer*
 "
 
@@ -49,7 +47,7 @@ src_compile() {
     unset LIBS
 
     cygconf
-    cygmake lib-ext all doc
+    cygmake lib-ext all
 }
 
 src_test() {
@@ -60,10 +58,4 @@ src_test() {
 src_install() {
     cd ${B}
     cygmake install DESTDIR=${D}
-
-    mkdir -p ${D}/usr/lib/ocaml
-    mv ${D}/usr/lib/opam-installer ${D}/usr/lib/ocaml
-
-    mkdir -p ${D}/usr/share/doc
-    mv ${D}/usr/doc/opam-installer ${D}/usr/share/doc
 }
