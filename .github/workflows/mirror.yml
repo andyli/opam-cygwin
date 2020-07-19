@@ -12,6 +12,7 @@ jobs:
         mkdir ~/.ssh
         echo "${CYGWIN_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H cygwin.com >> ~/.ssh/known_hosts
         git push --tags --force --prune "cygwin@cygwin.com:/git/cygwin-packages/opam"
       env:
         CYGWIN_SSH_PRIVATE_KEY: ${{ secrets.CYGWIN_SSH_PRIVATE_KEY }}
