@@ -1,4 +1,4 @@
-name: CI
+name: Mirror
 on:
   push:
     branches:
