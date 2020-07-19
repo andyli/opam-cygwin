@@ -6,10 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Mirroring Repository
-      uses: pixta-dev/repository-mirroring-action@v1
-      with:
-        target_repo_url:
-          cygwin@cygwin.com:/git/cygwin-packages/opam
-        ssh_private_key:
-          ${{ secrets.CYGWIN_SSH_PRIVATE_KEY }}
+    - name: mirror to cygwin
+      run: |
+        set -ex
+        mkdir ~/.ssh
+        echo "${CYGWIN_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        git push --tags --force --prune "cygwin@cygwin.com:/git/cygwin-packages/opam"
+      env:
+        CYGWIN_SSH_PRIVATE_KEY: ${{ secrets.CYGWIN_SSH_PRIVATE_KEY }}
